@@ -1,8 +1,23 @@
 <resources>
 
-    <string name="app_name">ScienceCar</string>
+    <string name="app_name">Science Car</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    <string name="title_activity_main">ScienceCar</string>
+    <string name="title_activity_main">Science Car</string>
+    <string name="title_activity_device_list">Bluetooth Device List </string>
+    <string name="scanning">Scanning for Devices&#8230;</string>
+    <string name="not_connected">Not connected to a device</string>
+    <string name="bt_not_enabled_leaving">Bluetooth was not enabled. Closing this application.</string>
+    <string name="title_connecting">Connecting&#8230;</string>
+    <string name="title_connected_to">Connected to \0</string>
+    <string name="title_not_connected">Not connected</string>
+    <string name="select_device">Select a device to connect to</string>
+    <string name="none_paired">No devices have been paired</string>
+    <string name="none_found">No devices have been found</string>
+    <string name="title_paired_devices">Paired Devices</string>
+    <string name="title_other_devices">Other Bluetooth Devices</string>
+    <string name="button_scan">Scan for devices</string>
+    <string name="button_connect">Connect to a device</string>
+    <string name="title_activity_device_details">Device Details</string>
 
 </resources>
