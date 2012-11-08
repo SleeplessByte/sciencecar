@@ -391,8 +391,7 @@ public class BluetoothChatService {
 					}
                     
                 	if (tmp == null) {
-                		int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-                    	if (currentapiVersion >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1)
+                		if (GingerBreadMR1OrHigher())
                     		tmp = getInsecureSocketWithService(device);
                 	}
                 }
@@ -402,10 +401,16 @@ public class BluetoothChatService {
             mmSocket = tmp;
         }
 		
+		boolean GingerBreadMR1OrHigher() {
+        	return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1;
+		}
+		
 		@TargetApi(10)
 		private BluetoothSocket getInsecureSocketWithService(BluetoothDevice device) throws IOException {
-			return device.createInsecureRfcommSocketToServiceRecord(
+			if (GingerBreadMR1OrHigher())
+				return device.createInsecureRfcommSocketToServiceRecord(
                     MY_UUID_INSECURE);
+			return null;
 		}
 
         public void run() {
