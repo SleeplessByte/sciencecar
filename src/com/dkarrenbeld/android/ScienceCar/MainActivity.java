@@ -13,6 +13,9 @@ import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -38,6 +41,8 @@ public class MainActivity extends Activity {
     
     // Name of the connected device
     private static String _connectedDeviceName = null;
+    
+    // Static members for static functions
     private static String _connectedToString = null;
     private static Context _applicationContext = null;
     private static ActionBar _actionBar = null;
@@ -46,7 +51,19 @@ public class MainActivity extends Activity {
     private BluetoothAdapter _bluetoothAdapter = null;
     // Member object for the chat services
     private BluetoothChatService _chatService = null;
+    
+    
+	protected byte _currentSpeed;
+	protected byte _currentDirection = (byte) 0x10;
+	protected Button _buttonSpeed0, _buttonSpeed1, _buttonSpeed2,
+		_buttonSpeed3, _buttonSpeed4, _buttonSpeed5, _buttonSpeed6,
+		_buttonSpeed7, _buttonSpeed8, _buttonSpeed9, _buttonSpeedA,
+		_buttonSpeedB, _buttonSpeedC, _buttonSpeedD, _buttonSpeedE,
+		_buttonSpeedF;
 	
+	protected Button _buttonDirN, _buttonDirNE, _buttonDirNW, 
+	_buttonDirE, _buttonDirW, _buttonDirSE, _buttonDirSW, _buttonDirS;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +79,19 @@ public class MainActivity extends Activity {
             return;
         }
         
+        // We can save this static. Android applications usually
+        // only have one instance at the same time running.
         _applicationContext = getApplicationContext();
         
-    	int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
+    	if (HoneycombOrHigher())
         	saveActionBar();
     }
     
     @TargetApi(11)
 	private void saveActionBar()
     {
-    	_actionBar = getActionBar();
+    	if (HoneycombOrHigher())
+    		_actionBar = getActionBar();
     }
 
     @Override
@@ -99,8 +118,228 @@ public class MainActivity extends Activity {
 
          // Initialize the BluetoothChatService to perform bluetooth connections
         _chatService = new BluetoothChatService(this, _handler);
-    }
+        
+        _buttonSpeed0 = (Button) findViewById(R.id.button_speed_0);
+        _buttonSpeed0.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.STOP;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed1 = (Button) findViewById(R.id.button_speed_1);
+        _buttonSpeed1.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.SLOWEST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
 
+        _buttonSpeed2 = (Button) findViewById(R.id.button_speed_2);
+        _buttonSpeed2.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.WAY_WAY_SLOW;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed3 = (Button) findViewById(R.id.button_speed_3);
+        _buttonSpeed3.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.WAY_SLOW;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed4 = (Button) findViewById(R.id.button_speed_4);
+        _buttonSpeed4.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.LESS_WAY_SLOW;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed5 = (Button) findViewById(R.id.button_speed_5);
+        _buttonSpeed5.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.SLOW;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed6 = (Button) findViewById(R.id.button_speed_6);
+        _buttonSpeed6.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.EASY_GOING;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed7 = (Button) findViewById(R.id.button_speed_7);
+        _buttonSpeed7.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.CRUISING;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed8 = (Button) findViewById(R.id.button_speed_8);
+        _buttonSpeed8.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.MOVING_RIGHT_ALONG;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeed9 = (Button) findViewById(R.id.button_speed_9);
+        _buttonSpeed9.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.MOVING_QUICK;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeedA = (Button) findViewById(R.id.button_speed_A);
+        _buttonSpeedA.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.MOVING_QUICKER;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeedB = (Button) findViewById(R.id.button_speed_B);
+        _buttonSpeedB.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.MOVING_PRETTY_DARN_QUICK;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeedC = (Button) findViewById(R.id.button_speed_C);
+        _buttonSpeedC.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.FAST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeedD = (Button) findViewById(R.id.button_speed_D);
+        _buttonSpeedD.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.FASTER;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeedE = (Button) findViewById(R.id.button_speed_E);
+        _buttonSpeedE.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.FASTEST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonSpeedF = (Button) findViewById(R.id.button_speed_F);
+        _buttonSpeedF.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentSpeed = DaguCarCommands.I_LIED_THIS_IS_FASTEST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonDirN = (Button) findViewById(R.id.button_dir_N);
+        _buttonDirN.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentDirection = DaguCarCommands.NORTH;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonDirNE = (Button) findViewById(R.id.button_dir_NE);
+        _buttonDirNE.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentDirection = DaguCarCommands.NORTHEAST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonDirNW = (Button) findViewById(R.id.button_dir_NW);
+        _buttonDirNW.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentDirection = DaguCarCommands.NORTHWEST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonDirSE = (Button) findViewById(R.id.button_dir_SE);
+        _buttonDirSE.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentDirection = DaguCarCommands.SOUTHHEAST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonDirSW = (Button) findViewById(R.id.button_dir_SW);
+        _buttonDirSW.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentDirection = DaguCarCommands.SOUTHWEST;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+        
+        _buttonDirSW = (Button) findViewById(R.id.button_dir_S);
+        _buttonDirSW.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				_currentDirection = DaguCarCommands.SOUTH;
+				byte controlbyte = DaguCarCommands.CreateCommand(_currentDirection, _currentSpeed);
+		        sendMessage(controlbyte);
+			}
+        });
+    }
+    
     @Override
     public synchronized void onResume() {
         super.onResume();
@@ -187,9 +426,6 @@ public class MainActivity extends Activity {
         // Attempt to connect to the device
         _chatService.connect(device, secure);
         _connectedToString = getString(R.string.title_connected_to, device.getName());
-        
-        while(true)
-        	sendMessage();
     }
     	
     /**
@@ -215,18 +451,6 @@ public class MainActivity extends Activity {
                     break;
                 }
                 break;
-            case MESSAGE_WRITE:
-                byte[] writeBuf = (byte[]) msg.obj;
-                // construct a string from the buffer
-                String writeMessage = new String(writeBuf);
-                //mConversationArrayAdapter.add("Me:  " + writeMessage);
-                break;
-            case MESSAGE_READ:
-                byte[] readBuf = (byte[]) msg.obj;
-                // construct a string from the valid bytes in the buffer
-                String readMessage = new String(readBuf, 0, msg.arg1);
-                //mConversationArrayAdapter.add(mConnectedDeviceName+":  " + readMessage);
-                break;
             case MESSAGE_DEVICE_NAME:
                 // save the connected device's name
                 _connectedDeviceName = msg.getData().getString(DEVICE_NAME);
@@ -241,25 +465,35 @@ public class MainActivity extends Activity {
         }
     };
     
+    static boolean HoneycombOrHigher() {
+    	return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB;
+    }
+    
+    /**
+     * Sets the status bar subtitle
+     * @param resId
+     */
     @TargetApi(11)
 	private final static void setStatus(int resId) {
-    	int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
+    	if (HoneycombOrHigher())
         	_actionBar.setSubtitle(resId);
         
     }
 
+    /**
+     * Sets the status bar subtitle
+     * @param subTitle
+     */
     @TargetApi(11)
 	private final static void setStatus(CharSequence subTitle) {
-    	int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        if (currentapiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB)
+    	if (HoneycombOrHigher())
         	_actionBar.setSubtitle(subTitle);
     }
     
     /**
      * Sends a message.
      */
-    private void sendMessage() {
+    private void sendMessage(byte controlbyte) {
         // Check that we're actually connected before trying anything
         if (_chatService.getState() != BluetoothChatService.STATE_CONNECTED) {
             Toast.makeText(this, R.string.not_connected, Toast.LENGTH_SHORT).show();
@@ -267,12 +501,8 @@ public class MainActivity extends Activity {
         }
 
         // Get the message bytes and tell the BluetoothChatService to write
-        byte[] send = new byte[] { (byte) 143 }; //message.getBytes();
+        byte[] send = new byte[] { (byte) controlbyte }; //message.getBytes();
         _chatService.write(send);
-
-        // Reset out string buffer to zero and clear the edit text field
-        //mOutStringBuffer.setLength(0);
-        
     }
     
     @Override
