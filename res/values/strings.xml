@@ -19,5 +19,29 @@
     <string name="button_scan">Scan for devices</string>
     <string name="button_connect">Connect to a device</string>
     <string name="title_activity_device_details">Device Details</string>
-
+	<string name="button_speed_0">Stop</string>
+	<string name="button_speed_1">Slowest</string>
+	<string name="button_speed_2">Slower</string>
+	<string name="button_speed_3">Slow</string>
+	<string name="button_speed_4">Slowest Cruising</string>
+	<string name="button_speed_5">Slower Cruising</string>
+	<string name="button_speed_6">Slow Cruising</string>
+	<string name="button_speed_7">Cruising</string>
+	<string name="button_speed_8">Racing Slowest</string>
+	<string name="button_speed_9">Racing Slower</string>
+	<string name="button_speed_A">Racing</string>
+	<string name="button_speed_B">Racing Quick</string>
+	<string name="button_speed_C">Racing Quickest</string>
+	<string name="button_speed_D">Fast</string>
+	<string name="button_speed_E">Faster</string>
+	<string name="button_speed_F">Fastest</string>
+	<string name="button_dir_N">Forward</string>
+	<string name="button_dir_S">Backward</string>
+	<string name="button_dir_NE">F Right</string>
+	<string name="button_dir_NW">F Left</string>
+	<string name="button_dir_W">Left</string>
+	<string name="button_dir_E">Right</string>
+	<string name="button_dir_SE">B Right</string>
+	<string name="button_dir_SW">B Left</string>
+	
 </resources>
