@@ -6,6 +6,9 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="15" />
+    
+    <uses-feature android:name="android.hardware.sensor.accelerometer"
+              android:required="true" />
 
     <supports-screens
         android:anyDensity="true"
@@ -24,6 +27,8 @@
         android:theme="@android:style/Animation" >
         <activity
             android:name=".MainActivity"
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +38,11 @@
         </activity>
         <activity
             android:name=".DeviceListActivity"
-            android:label="@string/title_activity_device_list" >
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait"
+            android:label="@string/title_activity_device_list" 
+            android:exported="false"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -41,7 +50,10 @@
         </activity>
         <activity
             android:name=".DeviceDetails"
-            android:label="@string/title_activity_device_details" >
+            android:configChanges="orientation"
+    		android:screenOrientation="portrait"
+            android:label="@string/title_activity_device_details" 
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.DEFAULT" />

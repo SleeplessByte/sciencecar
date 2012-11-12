@@ -51,9 +51,9 @@ public class BluetoothChatService {
 
     // Unique UUID for this application
     private static final UUID MY_UUID_SECURE =
-        UUID.fromString("fa87c0d0-afac-11de-8a39-0800200c9a66");
+    	UUID.fromString("33d7c290-2aed-11e2-81c1-0800200c9a66");
     private static final UUID MY_UUID_INSECURE =
-        UUID.fromString("8ce255c0-200a-11e0-ac64-0800200c9a66");
+    	UUID.fromString("33d7c291-2aed-11e2-81c1-0800200c9a66");
 
     // Member fields
     private final BluetoothAdapter mAdapter;
@@ -270,25 +270,32 @@ public class BluetoothChatService {
         private final BluetoothServerSocket mmServerSocket;
         private String mSocketType;
 
-        @TargetApi(10)
 		public AcceptThread(boolean secure) {
             BluetoothServerSocket tmp = null;
             mSocketType = secure ? "Secure":"Insecure";
 
             // Create a new listening server socket
             try {
-                if (secure) {
+                if (secure || !GingerBreadMR1OrHigher()) {
                     tmp = mAdapter.listenUsingRfcommWithServiceRecord(NAME_SECURE,
                         MY_UUID_SECURE);
                 } else {
-                    tmp = mAdapter.listenUsingInsecureRfcommWithServiceRecord(
-                            NAME_INSECURE, MY_UUID_INSECURE);
+                    tmp = useInsecureRfcomm(mAdapter);
                 }
             } catch (IOException e) {
                 Log.e(TAG, "Socket Type: " + mSocketType + "listen() failed", e);
             }
             mmServerSocket = tmp;
         }
+		
+		@TargetApi(10)
+		public BluetoothServerSocket useInsecureRfcomm(BluetoothAdapter adapter) throws IOException
+		{
+			if (GingerBreadMR1OrHigher())
+				return adapter.listenUsingInsecureRfcommWithServiceRecord(
+                    NAME_INSECURE, MY_UUID_INSECURE);
+			return null;
+		}
 
         public void run() {
             if (D) Log.d(TAG, "Socket Type: " + mSocketType +
@@ -343,6 +350,10 @@ public class BluetoothChatService {
                 Log.e(TAG, "Socket Type" + mSocketType + "close() of server failed", e);
             }
         }
+        
+        boolean GingerBreadMR1OrHigher() {
+        	return android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.GINGERBREAD_MR1;
+		}
     }
 
 
@@ -364,7 +375,7 @@ public class BluetoothChatService {
             // Get a BluetoothSocket for a connection with the
             // given BluetoothDevice
             try {
-                if (secure) {
+                if (secure || !GingerBreadMR1OrHigher()) {
                 	
                 	Method m;
 					try {
@@ -378,7 +389,7 @@ public class BluetoothChatService {
                     
                 	if (tmp == null)
                 		tmp = device.createRfcommSocketToServiceRecord(
-                            MY_UUID_SECURE);
+                                MY_UUID_SECURE);
                 } else {
                 	Method m;
 					try {

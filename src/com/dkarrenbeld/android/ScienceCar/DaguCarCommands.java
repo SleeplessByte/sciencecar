@@ -10,7 +10,7 @@ public final class DaguCarCommands {
 	public static final byte NORTHWEST  = (byte) 0x50;
 	public static final byte NORTHEAST  = (byte) 0x60;
 	public static final byte SOUTHWEST  = (byte) 0x70;
-	public static final byte SOUTHHEAST = (byte) 0x80;
+	public static final byte SOUTHEAST = (byte) 0x80;
 	
 	//public static final byte STOP = (byte) 0x00;
 	public static final byte SLOWEST = (byte) 0x01;
